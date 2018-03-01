@@ -31,6 +31,8 @@ export default class Home extends Component {
       open: false,
       timestamp: '',
       valid: true,
+      checked: true,
+      events: [],
     };
     this.handleGenerate = this.handleGenerate.bind(this);
     this.updateCheck = this.updateCheck.bind(this);
@@ -48,12 +50,22 @@ export default class Home extends Component {
     dataCalls.push(dataCall.getRuleDefinitions());
     dataCalls.push(dataCall.getShiftRules());
     dataCalls.push(dataCall.getTimeOff());
+    dataCalls.push(dataCall.getWeeks());
     Promise.all(dataCalls).then(values => {
       this.setState({
         rulesDefinitions: values[0],
         shiftRules: values[1],
         timeoff: values[2],
-      }, () => calculate(this.state));
+      }, () => {
+        let {schedule, events} = calculate(this.state);
+        if (schedule) {
+          dataCall.postData(schedule);
+          this.setState({
+            events
+          })
+        }
+
+      });
     });
   }
 
@@ -83,7 +95,7 @@ export default class Home extends Component {
   render() {
     return (
       <div>
-        <Panel>
+        <Panel events={this.state.events}>
           <Checkbox
             checkedIcon={<ActionFavorite />}
             label="TimeOff Requests"

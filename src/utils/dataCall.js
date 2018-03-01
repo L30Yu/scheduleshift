@@ -35,7 +35,7 @@ export function postData(data) {
     let url = rootUrl + "/submit";
     let name = 'test';
     let email = 'test@test.com';
-    let features = '&features[]=1&features=2';
+    let features = '&features[]=1&features[]=2';
     url += `?name=${name}&email=${email}${features}`;
 
     // Default options are marked with *

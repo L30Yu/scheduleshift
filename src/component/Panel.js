@@ -11,7 +11,7 @@ const style = {
   container: {
     display: 'flex',
     justifyContent: 'center',
-    height: '80%'
+    minHeight: '600px'
   },
   paper: {
     display: 'flex',
@@ -40,7 +40,7 @@ export default class Panel extends Component {
           <BigCalendar
             events={this.props.events ? this.props.events : []}
             popup
-            defaultDate={new Date(2015, 6, 1)}
+            defaultDate={new Date(2015, 5, 1)}
             views={['month']}
           />
         </Paper>
